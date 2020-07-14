@@ -1,19 +1,14 @@
 #include"Game.h"
-#include"MainMenu.h"
+#include"MainApplication.h"
 
 int main()
 {
 	//init seed for rand()
 	std::srand(static_cast<unsigned>(time(NULL)));
 
-	//init Game engine
-	Game game;
-	//game loop
-	while (game.running())
-	{
-		game.pollEvents();
-		game.menu();
-	}
+	MainApplication ma;
+
+	ma.run();
 
 	return 0;
 }

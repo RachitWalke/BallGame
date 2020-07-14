@@ -2,17 +2,23 @@
 
 #include<SFML/Graphics.hpp>
 #include<iostream>
+#include<fstream>
+#include<string>
+#include"state.h"
 
-class MainMenu
+class MainMenu : public state
 {
 
 	private:
 		//variables
-		bool playgame = false;
-		sf::Vector2f posView;
 		sf::Font font;
 		sf::Text playButton;
 		sf::Text quitButton;
+		sf::Texture menuTex;
+		sf::Sprite menuBack;
+		sf::Text high;
+		std::string gethigh;
+		std::fstream obj;
 
 	public:
 
@@ -21,9 +27,9 @@ class MainMenu
 		~MainMenu();
 
 		//member funcs
-		const bool getPlayGame() const;
-		void updateMenu(sf::RenderWindow& window);
-		void draw(sf::RenderWindow& window);
+		void  highscore();
+		void update(sf::Vector2f mpos, int& StateID) override;
+		void render(sf::RenderTarget& target) override;
 
 };
 

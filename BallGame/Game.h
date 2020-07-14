@@ -7,14 +7,13 @@
 #include<fstream>
 #include<string>
 #include<SFML/Graphics.hpp>
-//#include<SFML/Window.hpp>
-//#include<SFML/System.hpp>
 #include"MainMenu.h"
 #include"PauseMenu.h"
+#include"state.h"
 
 //main game wrapper class (acts as game engine)
 
-class Game
+class Game : public state
 {
 private:
 	/**
@@ -22,7 +21,7 @@ private:
 	*/
 
 	//window
-	sf::RenderWindow window;
+	sf::FloatRect win;
 	sf::Event event;
 
 	//platform Game logic
@@ -50,7 +49,7 @@ private:
 	sf::Font font;
 	sf::Text score;
 	sf::Text life;
-	sf::Text high;
+	sf::Text pauseButton;
 	sf::Text GameOversc;
 	sf::Texture backgroundTex;
 	sf::Sprite background;
@@ -58,14 +57,10 @@ private:
 	sf::Texture spikeTex;
 	sf::Texture platformTex;
 
-	MainMenu mm;
-	PauseMenu pm;
-
 	//private funcs
 	void initvariables();
 	void initplatform();
 	void initball();
-	void initwindow();
 	void initGOsc();
 
 public:
@@ -74,14 +69,7 @@ public:
 	Game();
 	~Game();
 
-	//accesscors
-
-	const bool running() const;
-	const bool getGameover() const;
-
-
 	//funcs
-	void pollEvents();
 	void spawnplatform();
 	void initSpike();
 	void updateplatform();
@@ -91,10 +79,8 @@ public:
 	void updateScore_Life();
 	void renderBall_spike(sf::RenderTarget& target);
 	void renderplatform(sf::RenderTarget& target);
-	void highScore();
-	void menu();
-	void update();
-	void render();
+	void update(sf::Vector2f mpos, int& StateID) override;
+	void render(sf::RenderTarget& target) override;
 
 };
 

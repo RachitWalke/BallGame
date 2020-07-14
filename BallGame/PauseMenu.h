@@ -1,18 +1,19 @@
 #pragma once
 
 #include<SFML\Graphics.hpp>
+#include<iostream>
+#include"state.h"
 
 
-class PauseMenu
+class PauseMenu : public state
 {
 
 private:
 	   //variables;
-	bool pauseGame = false;
-	sf::Vector2f posView;
 	sf::Font font;
-	sf::Text pauseButton;
 	sf::Text ContinueButton;
+	sf::Texture pauseTex;
+	sf::Sprite pauseBack;
 
 public:
 
@@ -21,9 +22,7 @@ public:
 	~PauseMenu();
 
 	//member funcs
-	const bool getPauseGame() const;
-	void updatePauseMenu(sf::RenderWindow& window);
-	void drawPause(sf::RenderWindow& window);
-	void drawContinue(sf::RenderWindow& window);
+	void update(sf::Vector2f mpos, int& StateID) override;
+	void render(sf::RenderTarget& target) override;
 };
 

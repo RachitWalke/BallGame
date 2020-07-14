@@ -34,14 +34,15 @@ void Game::initvariables()
 	platformTex.loadFromFile("SPRITES/platform.png");
 	spikeTex.loadFromFile("SPRITES/Spike.png");
 
-	//handleing highscore
-	high.setFont(font);
-	high.setCharacterSize(30);
-	high.setPosition(165.f - high.getGlobalBounds().width,0.f);
-	high.setFillColor(sf::Color(178,34,34,255));
-	high.setOutlineThickness(1.f);
-	high.setOutlineColor(sf::Color(0, 255, 127, 255));
-	high.setString("HighScore: " + getHS);
+	//pause button
+	pauseButton.setFont(font);
+	pauseButton.setCharacterSize(30);
+	pauseButton.setFillColor(sf::Color(255, 215, 0, 255));
+	pauseButton.setPosition(190.f - pauseButton.getGlobalBounds().width / 2.f, 0.f);
+	pauseButton.setString("II");
+
+	win.width = 400.f;
+	win.height = 700.f;
 }
 
 void Game::initplatform()
@@ -102,12 +103,6 @@ void Game::initball()
 	ball.setPosition(sf::Vector2f(200.f, 140.f));
 }
 
-void Game::initwindow()
-{
-	window.create(sf::VideoMode(400, 700), "BALL GAME", sf::Style::Titlebar | sf::Style::Close);
-	window.setFramerateLimit(60);
-}
-
 void Game::initGOsc()
 {
 
@@ -116,17 +111,14 @@ void Game::initGOsc()
 	GameOversc.setString("GAME OVER !");
 	GameOversc.setScale(1.2f, 1.2f);
 	GameOversc.setPosition(
-		window.getSize().x / 2.f - GameOversc.getGlobalBounds().width / 2.f,
-		window.getSize().y / 2.f - GameOversc.getGlobalBounds().height / 2.f);
-
+		win.width / 2.f - GameOversc.getGlobalBounds().width / 2.f,
+		win.height / 2.f - GameOversc.getGlobalBounds().height / 2.f);
 }
 
 //cons and des
 Game::Game() 
 {
-	highScore();
 	initvariables();
-	initwindow();
 	initball();
 	initSpike();
 	initplatform();
@@ -137,28 +129,6 @@ Game::~Game()
 {
 }
 
-//accesscors
-
-const bool Game::running() const
-{
-	return window.isOpen();
-}
-
-const bool Game::getGameover() const
-{
-	return gameover;
-}
-
-
-void Game::pollEvents()
-{
-	while (window.pollEvent(event))
-	{
-		if (event.type == sf::Event::Closed)
-			window.close();
-	}
-
-}
 
 //Member functions
 void Game::spawnplatform()
@@ -174,15 +144,15 @@ void Game::spawnplatform()
 	{
 	case 0:
 		platform.setPosition(
-	    (window.getSize().x - 120.f),window.getSize().y );
+	    (win.width - 120.f),win.height );
 		break;
 	case 1:
 		platform.setPosition(
-		(window.getSize().x - 250.f),window.getSize().y );
+		(win.width - 250.f),win.height );
 		break;
 	case 2:
 		platform.setPosition(
-		(window.getSize().x - 390.f),window.getSize().y );
+		(win.width - 390.f),win.height );
 		break;
 
 	default:
@@ -292,14 +262,14 @@ void Game::updateBall()
 		ball.setPosition(25.f, ball.getGlobalBounds().top);
 		moveBall();
 	}
-	else if ((ball.getGlobalBounds().left  + ball.getGlobalBounds().width) -5.f  >= window.getSize().x)
+	else if ((ball.getGlobalBounds().left  + ball.getGlobalBounds().width) -5.f  >= win.width)
 	{
-		ball.setPosition(window.getSize().x - ball.getGlobalBounds().width, ball.getGlobalBounds().top);
+		ball.setPosition(win.width - ball.getGlobalBounds().width, ball.getGlobalBounds().top);
 		moveBall();
 	}
 
 	//collision with bottom screen
-	if (ball.getGlobalBounds().top + 10.f >= window.getSize().y)
+	if (ball.getGlobalBounds().top + 10.f >= win.height)
 	{
 		health -= 1;
 		//reset ball
@@ -357,51 +327,8 @@ void Game::renderplatform(sf::RenderTarget& target)
 
 }
 
-void Game::highScore()
-{
-	obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt");
-	if (obj.is_open())
-	{
-		std::getline(obj, getHS);
-		//std::cout << getHS << std::endl;
-		obj.close();
-	}
-	else
-	{
-		std::cout << "unable to open highscore file" << std::endl;
-	}
-}
 
-void Game::menu()
-{
-	//mainmenu
-	window.clear();
-	window.draw(background);
-	mm.draw(window);
-	window.draw(high);
-	window.display();
-	mm.updateMenu(window);
-
-	while (mm.getPlayGame())
-	{
-		//gameplay
-		pollEvents();
-		update();
-		render();
-		pm.updatePauseMenu(window);
-		//pause menu
-		while (pm.getPauseGame())
-		{
-			pollEvents();
-			pm.drawContinue(window);
-			window.display();
-			pm.updatePauseMenu(window);
-		}
-	}
-}
-
-
-void Game::update()
+void Game::update(sf::Vector2f mpos, int& StateID)
 {
 	if (gameover == false)
 	{
@@ -409,7 +336,19 @@ void Game::update()
 		updateBall();
 		updateplatspeed();
 		updateScore_Life();
-		//std::cout << "life = " << health << std::endl;
+
+		//handling pause 
+		if (pauseButton.getGlobalBounds().contains(mpos))
+		{
+			pauseButton.setFillColor(sf::Color::Red);
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				StateID = 2;
+			}
+		}
+		else
+			pauseButton.setFillColor(sf::Color(255, 215, 0, 255));
 	}
 	
 	if (health <= 0)
@@ -418,26 +357,32 @@ void Game::update()
 	}
 }
 
-void Game::render()
+void Game::render(sf::RenderTarget& target)
 {
-	window.clear();
-	window.draw(background);
-	pm.drawPause(window);
+	//window.clear();
+	target.draw(background);
+	target.draw(pauseButton);
 
 	//render objects
-	renderplatform(window);
-	renderBall_spike(window);
+	renderplatform(target);
+	renderBall_spike(target);
 
 	//render GUI
-	window.draw(score);
-	window.draw(life);
+	target.draw(score);
+	target.draw(life);
 
 	//game over screen
 	if (health <= 0)
 	{
 		//game Over screen
-		window.draw(GameOversc);
+		target.draw(GameOversc);
 		//setting new highscore
+		obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt");
+		if (obj.is_open())
+		{
+			std::getline(obj, getHS);
+			obj.close();
+		}
 		std::stringstream sHS(getHS);
 		sHS >> checkHS;
 		if (pointi > checkHS)
@@ -448,6 +393,4 @@ void Game::render()
 		obj.close();
 	}
 
-
-	window.display();
 }
