@@ -55,6 +55,7 @@ void MainApplication::changeState()
 		break;
 	case 2: cState = &pausemenu;
 		break;
+	case 3: cState = &gameover;
 	default:
 		break;
 	}

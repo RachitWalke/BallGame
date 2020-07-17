@@ -33,7 +33,6 @@ private:
 	int pointi;
 	int n;
 	int health;
-	bool gameover;
 	std::string getHS;
 	int checkHS;
 	std::fstream obj;
@@ -48,20 +47,33 @@ private:
 	sf::Sprite ball;
 	sf::Font font;
 	sf::Text score;
-	sf::Text life;
 	sf::Text pauseButton;
-	sf::Text GameOversc;
 	sf::Texture backgroundTex;
 	sf::Sprite background;
 	sf::Texture ballTex;
 	sf::Texture spikeTex;
 	sf::Texture platformTex;
 
+	//UI / HUD
+	sf::Texture PauseTex;
+	sf::Sprite PauseB;
+	sf::Texture lifeFillTex;
+	sf::Sprite FillLife1;
+	sf::Sprite FillLife2;
+	sf::Sprite FillLife3;
+	sf::Texture lifeEmpTex;
+	sf::Sprite EmpLife1;
+	sf::Sprite EmpLife2;
+	sf::Sprite EmpLife3;
+	sf::Texture ScoreFieldTex;
+	sf::Sprite ScoreField;
+
+
 	//private funcs
 	void initvariables();
 	void initplatform();
 	void initball();
-	void initGOsc();
+	void initHearts();
 
 public:
 
@@ -77,6 +89,7 @@ public:
 	void updateBall();
 	void updateplatspeed();
 	void updateScore_Life();
+	//void reset();
 	void renderBall_spike(sf::RenderTarget& target);
 	void renderplatform(sf::RenderTarget& target);
 	void update(sf::Vector2f mpos, int& StateID) override;

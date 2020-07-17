@@ -4,6 +4,9 @@
 void Game::initvariables()
 {
 
+	win.width = 400.f;
+	win.height = 700.f;
+
 	//initialize gamelogic variables
 	platSpwanTimer = 0.f;
 	platSpwanTimerMax = 100.f;
@@ -15,15 +18,11 @@ void Game::initvariables()
 	health = 3;
 	velocity.x = 2.5f;
 	velocity.y = 2.5f;
-	gameover = false;
 
 	//text variables
 	font.loadFromFile("FONTS/IMMORTAL.ttf");
 	score.setFont(font);
-	life.setFont(font);
-	life.setPosition(280.f, 0.f);
 	score.setFillColor(sf::Color(200, 0 ,0, 255));
-	life.setFillColor(sf::Color(200, 0, 0, 255));
 
 	//background 
 	backgroundTex.loadFromFile("SPRITES/Bg.png");
@@ -41,8 +40,16 @@ void Game::initvariables()
 	pauseButton.setPosition(190.f - pauseButton.getGlobalBounds().width / 2.f, 0.f);
 	pauseButton.setString("II");
 
-	win.width = 400.f;
-	win.height = 700.f;
+	//UI / HUD
+	PauseTex.loadFromFile("SPRITES/b_8.png");
+	PauseB.setTexture(PauseTex);
+	PauseB.setScale(0.1, 0.1);
+	PauseB.setPosition(194.f - pauseButton.getGlobalBounds().width / 2.f, 3.f);
+
+	ScoreFieldTex.loadFromFile("SPRITES/field2.png");
+	ScoreField.setTexture(ScoreFieldTex);
+	ScoreField.setScale(0.508, 0.268);
+
 }
 
 void Game::initplatform()
@@ -103,16 +110,38 @@ void Game::initball()
 	ball.setPosition(sf::Vector2f(200.f, 140.f));
 }
 
-void Game::initGOsc()
+void Game::initHearts()
 {
 
-	//GameOver screen
-	GameOversc.setFont(font);
-	GameOversc.setString("GAME OVER !");
-	GameOversc.setScale(1.2f, 1.2f);
-	GameOversc.setPosition(
-		win.width / 2.f - GameOversc.getGlobalBounds().width / 2.f,
-		win.height / 2.f - GameOversc.getGlobalBounds().height / 2.f);
+	//initializing life
+	lifeFillTex.loadFromFile("SPRITES/l1.png");
+	lifeEmpTex.loadFromFile("SPRITES/l2.png");
+
+	//filled haerts:-
+	FillLife1.setTexture(lifeFillTex);
+	FillLife1.setScale(0.18, 0.18);
+	FillLife1.setPosition(395.f - FillLife1.getGlobalBounds().width, 3.f);
+
+	FillLife2.setTexture(lifeFillTex);
+	FillLife2.setScale(0.18, 0.18);
+	FillLife2.setPosition(345.f - FillLife2.getGlobalBounds().width, 3.f);
+
+	FillLife3.setTexture(lifeFillTex);
+	FillLife3.setScale(0.18, 0.18);
+	FillLife3.setPosition(295.f - FillLife3.getGlobalBounds().width, 3.f);
+
+	//empty Hearts:-
+	EmpLife1.setTexture(lifeEmpTex);
+	EmpLife1.setScale(0.18, 0.18);
+	EmpLife1.setPosition(395.f - EmpLife1.getGlobalBounds().width, 3.f);
+
+	EmpLife2.setTexture(lifeEmpTex);
+	EmpLife2.setScale(0.18, 0.18);
+	EmpLife2.setPosition(345.f - EmpLife2.getGlobalBounds().width, 3.f);
+	   
+	EmpLife3.setTexture(lifeEmpTex);
+	EmpLife3.setScale(0.18, 0.18);
+	EmpLife3.setPosition(295.f - EmpLife3.getGlobalBounds().width, 3.f);
 }
 
 //cons and des
@@ -122,7 +151,7 @@ Game::Game()
 	initball();
 	initSpike();
 	initplatform();
-	initGOsc();
+	initHearts();
 }
 
 Game::~Game()
@@ -298,10 +327,20 @@ void Game::updateScore_Life()
 	std::stringstream ss;
 	ss << "Score: " << pointi;
 	score.setString(ss.str());
-
-	life.setString("Life: " + std::to_string(health));
-
 }
+
+/*void Game::reset()
+{
+	initvariables();
+	initball();
+	initSpike();
+	initplatform();
+	for (auto i = 0; i < platforms.size(); i++)
+	{
+		platforms.erase(platforms.begin() + i);
+	}
+}*/
+
 
 void Game::renderBall_spike(sf::RenderTarget& target)
 {
@@ -330,8 +369,6 @@ void Game::renderplatform(sf::RenderTarget& target)
 
 void Game::update(sf::Vector2f mpos, int& StateID)
 {
-	if (gameover == false)
-	{
 		updateplatform();
 		updateBall();
 		updateplatspeed();
@@ -348,19 +385,20 @@ void Game::update(sf::Vector2f mpos, int& StateID)
 			}
 		}
 		else
-			pauseButton.setFillColor(sf::Color(255, 215, 0, 255));
-	}
+			pauseButton.setFillColor(sf::Color(138, 43, 226, 255));
 	
 	if (health <= 0)
 	{
-		gameover = true;
+		//reset();
+		StateID = 3;
 	}
 }
 
 void Game::render(sf::RenderTarget& target)
 {
-	//window.clear();
 	target.draw(background);
+	target.draw(ScoreField);
+	target.draw(PauseB);
 	target.draw(pauseButton);
 
 	//render objects
@@ -368,14 +406,31 @@ void Game::render(sf::RenderTarget& target)
 	renderBall_spike(target);
 
 	//render GUI
+	
 	target.draw(score);
-	target.draw(life);
+	target.draw(FillLife1);
+	target.draw(FillLife2);
+	target.draw(FillLife3);
+	//handelling hearts
+	if (health == 2)
+	{
+		target.draw(EmpLife1);
+	}
+	if (health == 1)
+	{
+		target.draw(EmpLife1);
+		target.draw(EmpLife2);
+	}
+	if(health == 0)
+	{
+		target.draw(EmpLife1);
+		target.draw(EmpLife2);
+		target.draw(EmpLife3);
+	}
 
 	//game over screen
 	if (health <= 0)
 	{
-		//game Over screen
-		target.draw(GameOversc);
 		//setting new highscore
 		obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt");
 		if (obj.is_open())

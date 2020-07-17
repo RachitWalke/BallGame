@@ -20,6 +20,12 @@ class MainMenu : public state
 		std::string gethigh;
 		std::fstream obj;
 
+		//UI
+		sf::Texture PBtex;
+		sf::Texture QBtex;
+		sf::Sprite PB;
+		sf::Sprite QB;
+		
 	public:
 
 		//cons and des

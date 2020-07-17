@@ -7,6 +7,7 @@
 #include"MainMenu.h"
 #include"Game.h"
 #include"PauseMenu.h"
+#include"GameOver.h"
 
 class MainApplication
 {
@@ -26,6 +27,7 @@ private:
 	Game game;
 	MainMenu mainmenu;
 	PauseMenu pausemenu;
+	GameOver gameover;
 
 	void changeState();
 	state* cState;

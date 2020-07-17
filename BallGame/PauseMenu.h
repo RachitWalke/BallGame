@@ -15,6 +15,10 @@ private:
 	sf::Texture pauseTex;
 	sf::Sprite pauseBack;
 
+	//UI
+	sf::Texture CBtex;
+	sf::Sprite CB;
+
 public:
 
 	//cons and des
