@@ -12,7 +12,6 @@
 #include"state.h"
 
 //main game wrapper class (acts as game engine)
-
 class Game : public state
 {
 private:
@@ -74,6 +73,8 @@ private:
 	void initplatform();
 	void initball();
 	void initHearts();
+	void initLevel2();
+	void initLevel3();
 
 public:
 

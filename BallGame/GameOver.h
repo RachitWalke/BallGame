@@ -1,10 +1,11 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<iostream>
+#include<string>
 #include"state.h"
 #include"Game.h"
 
-class GameOver : public state,public Game
+class GameOver : public state
 {
 public:
 	//cons and des
@@ -20,7 +21,6 @@ private:
 	//variables
 
 	sf::Font font;
-	sf::Text scoreDis;
 	sf::Texture ScoreBtex;
 	sf::Sprite ScoreB;
 	sf::Texture GOtex;

@@ -144,6 +144,32 @@ void Game::initHearts()
 	EmpLife3.setPosition(295.f - EmpLife3.getGlobalBounds().width, 3.f);
 }
 
+void Game::initLevel2()
+{
+	//background 
+	backgroundTex.loadFromFile("SPRITES/duskBg.png");
+	background.setTexture(backgroundTex);
+
+	//game sprites textures
+	platformTex.loadFromFile("SPRITES/rockplat.png");
+	initplatform();
+	spikeTex.loadFromFile("SPRITES/rockspike.png");
+	initSpike();
+}
+
+void Game::initLevel3()
+{
+	//background 
+	backgroundTex.loadFromFile("SPRITES/nightBg.png");
+	background.setTexture(backgroundTex);
+
+	//game sprites textures
+	platformTex.loadFromFile("SPRITES/iceplat.png");
+	initplatform();
+	spikeTex.loadFromFile("SPRITES/icespike.png");
+	initSpike();
+}
+
 //cons and des
 Game::Game() 
 {
@@ -387,11 +413,22 @@ void Game::update(sf::Vector2f mpos, int& StateID)
 		else
 			pauseButton.setFillColor(sf::Color(138, 43, 226, 255));
 	
-	if (health <= 0)
-	{
-		//reset();
-		StateID = 3;
-	}
+		//handelling levels
+		if (pointi == 100)
+		{
+			initLevel2();
+		}
+		if (pointi == 200)
+		{
+			initLevel3();
+		}
+
+		//handelling gameover
+		if (health <= 0)
+		{
+			//reset();
+			StateID = 3;
+		}
 }
 
 void Game::render(sf::RenderTarget& target)

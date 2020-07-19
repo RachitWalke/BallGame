@@ -2,7 +2,6 @@
 
 GameOver::GameOver()
 {
-	
 	font.loadFromFile("FONTS/comic.ttf");
 
 	//Display Game over
@@ -13,9 +12,6 @@ GameOver::GameOver()
 	GO.setScale(0.65f, 0.65f);
 	GO.setPosition(25.f, 90.f);
 
-	//score Display
-	scoreDis.setFont(font);
-	scoreDis.setPosition(150.f, 500.f);
 	//score button 
 	ScoreBtex.loadFromFile("SPRITES/f.png");
 	ScoreB.setTexture(ScoreBtex);
@@ -40,5 +36,5 @@ void GameOver::render(sf::RenderTarget & target)
 	target.draw(GOBack);
 	target.draw(GO);
 	target.draw(ScoreB);
-	target.draw(scoreDis);
 }
+
