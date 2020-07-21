@@ -90,6 +90,7 @@ public:
 	void updateBall();
 	void updateplatspeed();
 	void updateScore_Life();
+	int  getScore();
 	//void reset();
 	void renderBall_spike(sf::RenderTarget& target);
 	void renderplatform(sf::RenderTarget& target);

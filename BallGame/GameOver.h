@@ -15,12 +15,14 @@ public:
 	
 	void update(sf::Vector2f mpos, int& StateID) override;
 	void render(sf::RenderTarget& target) override;
+	void setScore(int score);
 
 
 private:
 	//variables
 
 	sf::Font font;
+	sf::Text ScoreDis;
 	sf::Texture ScoreBtex;
 	sf::Sprite ScoreB;
 	sf::Texture GOtex;

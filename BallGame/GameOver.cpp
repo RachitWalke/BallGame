@@ -17,6 +17,11 @@ GameOver::GameOver()
 	ScoreB.setTexture(ScoreBtex);
 	ScoreB.setScale(0.2f, 0.15f);
 	ScoreB.setPosition(40.f, 400.f);
+
+	//current score
+	ScoreDis.setFont(font);
+	ScoreDis.setFillColor(sf::Color(100, 149, 273, 255));
+	ScoreDis.setCharacterSize(40);
 }
 
 GameOver::~GameOver()
@@ -36,5 +41,12 @@ void GameOver::render(sf::RenderTarget & target)
 	target.draw(GOBack);
 	target.draw(GO);
 	target.draw(ScoreB);
+	target.draw(ScoreDis);
+}
+
+void GameOver::setScore(int score)
+{
+	ScoreDis.setString("Your Score \n \t  " + std::to_string(score));
+	ScoreDis.setPosition(95.f, 430.f);
 }
 

@@ -355,6 +355,11 @@ void Game::updateScore_Life()
 	score.setString(ss.str());
 }
 
+int Game::getScore()
+{
+	return pointi;
+}
+
 /*void Game::reset()
 {
 	initvariables();
