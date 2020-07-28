@@ -47,7 +47,7 @@ void GameOver::update(sf::Vector2f mpos, int & StateID)
 		MM.setFillColor(sf::Color(255, 69, 0, 255));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			StateID = 0;
+			StateID = 1;
 		}
 	}
 	else

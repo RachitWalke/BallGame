@@ -8,6 +8,7 @@
 #include"Game.h"
 #include"PauseMenu.h"
 #include"GameOver.h"
+#include"SplashScreen.h"
 
 class MainApplication
 {
@@ -24,6 +25,7 @@ private:
 
 	sf::RenderWindow window;
 
+	SplashScreen ss;
 	Game game;
 	MainMenu mainmenu;
 	PauseMenu pausemenu;

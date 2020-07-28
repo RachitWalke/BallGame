@@ -49,13 +49,15 @@ void MainApplication::changeState()
 	{
 	case -1: window.close();
 		break;
-	case 0: cState = &mainmenu;
+	case 0: cState = &ss;
 		break;
-	case 1: cState = &game;
+	case 1: cState = &mainmenu;
 		break;
-	case 2: cState = &pausemenu;
+	case 2: cState = &game;
 		break;
-	case 3: cState = &gameover;
+	case 3: cState = &pausemenu;
+		break;
+	case 4: cState = &gameover;
 		gameover.setScore(game.getScore());
 		game.reset();
 	default:

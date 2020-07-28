@@ -25,6 +25,7 @@
     <ClCompile Include="MainApplication.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="MainApplication.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="state.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

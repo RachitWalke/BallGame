@@ -417,7 +417,7 @@ void Game::update(sf::Vector2f mpos, int& StateID)
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				StateID = 2;
+				StateID = 3;
 			}
 		}
 		else
@@ -436,7 +436,7 @@ void Game::update(sf::Vector2f mpos, int& StateID)
 		//handelling gameover
 		if (health <= 0)
 		{
-			StateID = 3;
+			StateID = 4;
 		}
 }
 

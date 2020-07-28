@@ -77,7 +77,7 @@ void MainMenu::update(sf::Vector2f mpos, int& StateID)
 		quitButton.setFillColor(sf::Color(138, 43, 226, 255));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			StateID = 1;
+			StateID = 2;
 		}
 	}
 	if (quitButton.getGlobalBounds().contains(mpos))

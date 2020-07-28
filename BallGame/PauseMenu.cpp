@@ -35,7 +35,7 @@ void PauseMenu::update(sf::Vector2f mpos, int& StateID)
 		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			StateID = 1;
+			StateID = 2;
 		}
 	}
 	else
