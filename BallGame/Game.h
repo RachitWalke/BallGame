@@ -91,7 +91,7 @@ public:
 	void updateplatspeed();
 	void updateScore_Life();
 	int  getScore();
-	//void reset();
+	void reset();
 	void renderBall_spike(sf::RenderTarget& target);
 	void renderplatform(sf::RenderTarget& target);
 	void update(sf::Vector2f mpos, int& StateID) override;

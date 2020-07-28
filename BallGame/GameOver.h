@@ -23,6 +23,9 @@ private:
 
 	sf::Font font;
 	sf::Text ScoreDis;
+	sf::Text MM;
+	sf::Texture MMtex;
+	sf::Sprite MMb;
 	sf::Texture ScoreBtex;
 	sf::Sprite ScoreB;
 	sf::Texture GOtex;

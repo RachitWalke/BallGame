@@ -57,6 +57,7 @@ void MainApplication::changeState()
 		break;
 	case 3: cState = &gameover;
 		gameover.setScore(game.getScore());
+		game.reset();
 	default:
 		break;
 	}

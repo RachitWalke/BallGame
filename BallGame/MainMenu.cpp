@@ -53,7 +53,7 @@ MainMenu::~MainMenu()
 }
 void MainMenu::highscore()
 {
-	obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt");
+	obj.open("Highscore.txt");
 	if (obj.is_open())
 	{
 		std::getline(obj, gethigh);
@@ -68,6 +68,8 @@ void MainMenu::highscore()
 void MainMenu::update(sf::Vector2f mpos, int& StateID)
 {
 
+	highscore();
+	high.setString("HighScore: " + gethigh);
 
 	if (playButton.getGlobalBounds().contains(mpos))
 	{

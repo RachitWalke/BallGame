@@ -37,18 +37,23 @@ void Game::initvariables()
 	pauseButton.setFont(font);
 	pauseButton.setCharacterSize(30);
 	pauseButton.setFillColor(sf::Color(255, 215, 0, 255));
-	pauseButton.setPosition(190.f - pauseButton.getGlobalBounds().width / 2.f, 0.f);
+	pauseButton.setPosition(179.f, 0.f);
 	pauseButton.setString("II");
 
 	//UI / HUD
 	PauseTex.loadFromFile("SPRITES/b_8.png");
 	PauseB.setTexture(PauseTex);
 	PauseB.setScale(0.1, 0.1);
-	PauseB.setPosition(194.f - pauseButton.getGlobalBounds().width / 2.f, 3.f);
+	PauseB.setPosition(172.f, 3.f);
 
 	ScoreFieldTex.loadFromFile("SPRITES/field2.png");
 	ScoreField.setTexture(ScoreFieldTex);
 	ScoreField.setScale(0.508, 0.268);
+
+	//initialize highscore file
+	/*std::ofstream fout("BallGameHigh.txt");
+	fout << "0" << std::endl;
+	fout.close();*/
 
 }
 
@@ -360,7 +365,7 @@ int Game::getScore()
 	return pointi;
 }
 
-/*void Game::reset()
+void Game::reset()
 {
 	initvariables();
 	initball();
@@ -370,7 +375,7 @@ int Game::getScore()
 	{
 		platforms.erase(platforms.begin() + i);
 	}
-}*/
+}
 
 
 void Game::renderBall_spike(sf::RenderTarget& target)
@@ -431,7 +436,6 @@ void Game::update(sf::Vector2f mpos, int& StateID)
 		//handelling gameover
 		if (health <= 0)
 		{
-			//reset();
 			StateID = 3;
 		}
 }
@@ -474,7 +478,7 @@ void Game::render(sf::RenderTarget& target)
 	if (health <= 0)
 	{
 		//setting new highscore
-		obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt");
+		obj.open("Highscore.txt");
 		if (obj.is_open())
 		{
 			std::getline(obj, getHS);
@@ -484,7 +488,7 @@ void Game::render(sf::RenderTarget& target)
 		sHS >> checkHS;
 		if (pointi > checkHS)
 		{
-			obj.open("E:\\Work\\VSProject\\BallGame\\BallGame\\Highscore.txt", std::ofstream::out | std::ofstream::trunc);
+			obj.open("Highscore.txt", std::ofstream::out | std::ofstream::trunc);
 			obj << std::to_string(pointi);
 		}
 		obj.close();
